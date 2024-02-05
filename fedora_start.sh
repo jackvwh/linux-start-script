@@ -4,11 +4,41 @@ echo "Starting the script with user: $USER and sudo user: $SUDO_USER"
 echo "Updating the system..."
 sudo dnf update -y
 
-# configure security 
-
 # install nodejs and  npm
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
+
+
+read -p "Would you like to install Jetbrains IntelliJ IDEA Ultimate? (y/N): " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+    echo "Installing Jetbrains IntelliJ IDEA Ultimate..."
+    # Download the tar.gz file to the current directory
+    wget https://download.jetbrains.com/idea/ideaIU-2021.2.2.tar.gz
+    # Extract it to /opt (or another directory of your choice)
+    sudo tar -xzf ideaIU-2021.2.2.tar.gz -C /opt
+    # Optionally, add the installation bin directory to the PATH or create a launcher
+
+    # Create a desktop file
+    echo "[Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=IntelliJ IDEA Ultimate
+    Icon=/opt/idea-IU-212.5284.40/bin/idea.png
+    Exec="/opt/idea-IU-212.5284.40/bin/idea.sh" %f
+    Comment=Capable and Ergonomic IDE for JVM
+    Categories=Development;IDE;
+    Terminal=false
+    StartupWMClass=jetbrains-idea" > ~/.local/share/applications/idea.desktop
+    
+
+    # Make the desktop file executable
+    sudo chmod +x ~/.local/share/applications/idea.desktop
+    # Remove the downloaded tar.gz file
+    rm ideaIU-2021.2.2.tar.gz
+fi
+
+
 
 #install vscode
 if ! command -v code &> /dev/null
