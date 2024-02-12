@@ -38,7 +38,28 @@ then
     rm ideaIU-2021.2.2.tar.gz
 fi
 
-
+read -p "What version of Java would you like to install? (8/11/17/latest): " response
+case $response in
+    8)
+        echo "Installing Java 8..."
+        sudo dnf install java-1.8.0-openjdk -y
+        ;;
+    11)
+        echo "Installing Java 11..."
+        sudo dnf install java-11-openjdk -y
+        ;;
+    17)
+        echo "Installing Java 17..."
+        sudo dnf install java-17-openjdk -y
+        ;;
+    latest)
+        echo "Installing the latest version of Java..."
+        sudo dnf install java-latest-openjdk -y
+        ;;
+    *)
+        echo "Invalid option. No version of Java will be installed."
+        ;;
+esac
 
 #install vscode
 if ! command -v code &> /dev/null
