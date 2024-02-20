@@ -14,10 +14,8 @@ if ! command -v jetbrains-toolbox &> /dev/null
 then
     echo "Installing JetBrains Toolbox..."
     wget -O jetbrains-toolbox.tar.gz "https://data.services.jetbrains.com/products/download?platform=linux&code=TBA"
-    tar -xzf jetbrains-toolbox.tar.gz
+    sudo tar -xzf jetbrains-toolbox.tar.gz -C /opt/
     rm jetbrains-toolbox.tar.gz
-    sudo mv jetbrains-toolbox*/jetbrains-toolbox /usr/local/bin
-    rm -rf jetbrains-toolbox*
 fi
 #install vscode
 if ! command -v code &> /dev/null
