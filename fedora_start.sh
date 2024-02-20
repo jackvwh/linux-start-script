@@ -8,6 +8,37 @@ sudo dnf update -y
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
 
+#ask to install java 17 or latest java
+read -p "Would you like to install Java 17? (y/N): " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+    echo "Installing Java 17..."
+    sudo dnf install java-17-openjdk -y
+else
+    echo "Installing the latest version of Java..."
+    sudo dnf install java-latest-openjdk -y
+fi
+# set java home
+# Find the path to the Java executable
+JAVA_PATH=$(readlink -f $(which java))
+
+# Derive the JAVA_HOME from JAVA_PATH, assuming the path ends with /bin/java
+JAVA_HOME="${JAVA_PATH%/bin/java}"
+
+# Find the path to the Java executable
+JAVA_PATH=$(readlink -f $(which java))
+
+# Derive the JAVA_HOME from JAVA_PATH, assuming the path ends with /bin/java
+JAVA_HOME="${JAVA_PATH%/bin/java}"
+
+# Check if JAVA_HOME is valid
+if [[ -d "$JAVA_HOME" ]]; then
+    echo "Setting JAVA_HOME to $JAVA_HOME"
+    export JAVA_HOME="$JAVA_HOME"
+    echo "JAVA_HOME is set to $JAVA_HOME"
+else
+    echo "Java installation could not be found."
+fi
 
 # install JetBrains Toolbox
 if ! command -v jetbrains-toolbox &> /dev/null
