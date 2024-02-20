@@ -17,6 +17,12 @@ then
     sudo tar -xzf jetbrains-toolbox.tar.gz -C /opt/
     rm jetbrains-toolbox.tar.gz
 fi
+#isntall Maven
+if ! command -v mvn &> /dev/null
+then
+    echo "Installing Maven..."
+    sudo dnf install maven -y
+fi
 #install vscode
 if ! command -v code &> /dev/null
 then
