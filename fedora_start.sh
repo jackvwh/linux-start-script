@@ -9,58 +9,16 @@ echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
 
 
-read -p "Would you like to install Jetbrains IntelliJ IDEA Ultimate? (y/N): " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+# install JetBrains Toolbox
+if ! command -v jetbrains-toolbox &> /dev/null
 then
-    echo "Installing Jetbrains IntelliJ IDEA Ultimate..."
-    # Download the tar.gz file to the current directory
-    wget https://download.jetbrains.com/idea/ideaIU-2021.2.2.tar.gz
-    # Extract it to /opt (or another directory of your choice)
-    sudo tar -xzf ideaIU-2021.2.2.tar.gz -C /opt
-    # Optionally, add the installation bin directory to the PATH or create a launcher
-
-    # Create a desktop file
-    echo "[Desktop Entry]
-    Version=1.0
-    Type=Application
-    Name=IntelliJ IDEA Ultimate
-    Icon=/opt/idea-IU-212.5284.40/bin/idea.png
-    Exec="/opt/idea-IU-212.5284.40/bin/idea.sh" %f
-    Comment=Capable and Ergonomic IDE for JVM
-    Categories=Development;IDE;
-    Terminal=false
-    StartupWMClass=jetbrains-idea" > ~/.local/share/applications/idea.desktop
-    
-
-    # Make the desktop file executable
-    sudo chmod +x ~/.local/share/applications/idea.desktop
-    # Remove the downloaded tar.gz file
-    rm ideaIU-2021.2.2.tar.gz
+    echo "Installing JetBrains Toolbox..."
+    wget -O jetbrains-toolbox.tar.gz "https://data.services.jetbrains.com/products/download?platform=linux&code=TBA"
+    tar -xzf jetbrains-toolbox.tar.gz
+    rm jetbrains-toolbox.tar.gz
+    sudo mv jetbrains-toolbox*/jetbrains-toolbox /usr/local/bin
+    rm -rf jetbrains-toolbox*
 fi
-
-read -p "What version of Java would you like to install? (8/11/17/latest): " response
-case $response in
-    8)
-        echo "Installing Java 8..."
-        sudo dnf install java-1.8.0-openjdk -y
-        ;;
-    11)
-        echo "Installing Java 11..."
-        sudo dnf install java-11-openjdk -y
-        ;;
-    17)
-        echo "Installing Java 17..."
-        sudo dnf install java-17-openjdk -y
-        ;;
-    latest)
-        echo "Installing the latest version of Java..."
-        sudo dnf install java-latest-openjdk -y
-        ;;
-    *)
-        echo "Invalid option. No version of Java will be installed."
-        ;;
-esac
-
 #install vscode
 if ! command -v code &> /dev/null
 then
