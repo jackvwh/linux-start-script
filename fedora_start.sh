@@ -2,58 +2,32 @@
 echo "Starting the script with user: $USER and sudo user: $SUDO_USER"
 
 echo "Updating the system..."
-sudo dnf update -y
+sudo dnf upgrade --refresh -y
+
+#install mysql workbench
+if ! command -v mysql-workbench &> /dev/null
+then
+    echo "Installing MySQL Workbench..."
+    wget https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-8.0.36-1.fc38.x86_64.rpm
+    sudo dnf install mysql-workbench-community-8.0.36-1.fc38.x86_64.rpm -y
+fi
 
 # install nodejs and  npm
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
 
-#ask to install java 17 or latest java
-read -p "Would you like to install Java 17? (y/N): " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
-then
-    echo "Installing Java 17..."
-    sudo dnf install java-17-openjdk -y
-else
-    echo "Installing the latest version of Java..."
-    sudo dnf install java-latest-openjdk -y
-fi
-# set java home
-# Find the path to the Java executable
-JAVA_PATH=$(readlink -f $(which java))
-
-# Derive the JAVA_HOME from JAVA_PATH, assuming the path ends with /bin/java
-JAVA_HOME="${JAVA_PATH%/bin/java}"
-
-# Find the path to the Java executable
-JAVA_PATH=$(readlink -f $(which java))
-
-# Derive the JAVA_HOME from JAVA_PATH, assuming the path ends with /bin/java
-JAVA_HOME="${JAVA_PATH%/bin/java}"
-
-# Check if JAVA_HOME is valid
-if [[ -d "$JAVA_HOME" ]]; then
-    echo "Setting JAVA_HOME to $JAVA_HOME"
-    export JAVA_HOME="$JAVA_HOME"
-    echo "JAVA_HOME is set to $JAVA_HOME"
-else
-    echo "Java installation could not be found."
-fi
-
 # install JetBrains Toolbox
 if ! command -v jetbrains-toolbox &> /dev/null
 then
     echo "Installing JetBrains Toolbox..."
+    sudo mkdir /opt/jetbrains
     wget -O jetbrains-toolbox.tar.gz "https://data.services.jetbrains.com/products/download?platform=linux&code=TBA"
-    sudo tar -xzf jetbrains-toolbox.tar.gz -C /opt/
+    sudo tar -xzf jetbrains-toolbox.tar.gz -C /opt/jetbrains
     rm jetbrains-toolbox.tar.gz
+    sudo ln -s /opt/jetbrains/jetbrains-toolbox-*/jetbrains-toolbox /usr/bin/jetbrains
+    echo "JetBrains Toolbox installed successfully."
 fi
-#isntall Maven
-if ! command -v mvn &> /dev/null
-then
-    echo "Installing Maven..."
-    sudo dnf install maven -y
-fi
+
 #install vscode
 if ! command -v code &> /dev/null
 then
@@ -83,11 +57,55 @@ then
     sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
     sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     sudo systemctl start docker
+    sudo docker run hello-world
 # linux post install docker
+    sudo groupadd docker
     echo "Attempting to add user to docker group..."
     sudo usermod -aG docker $SUDO_USER
     sudo systemctl enable docker
 fi
+
+
+echo "Installing Java 17 and latest OpenJDK..."
+sudo dnf install java-17-openjdk-devel.x86_64 -y
+sudo dnf install java-latest-openjdk-devel.x86_64 -y
+
+
+#install Maven
+if ! command -v mvn &> /dev/null
+then
+    echo "Installing Maven..."
+    sudo dnf install maven -y
+fi
+
+#install Mattermost Desktop from flathub
+if ! command -v mattermost-desktop &> /dev/null
+then
+    echo "Installing Mattermost Desktop..."
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak install flathub com.mattermost.Desktop -y
+    flatpak run com.mattermost.Desktop
+fi
+
+# install Chrome browser from Flathub
+if ! command -v google-chrome &> /dev/null
+then
+    echo "Installing Google Chrome..."
+    flatpak install flathub com.google.Chrome -y
+    flatpak run com.google.Chrome
+fi
+
+# install Multimedia Codecs
+sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel -y
+sudo dnf install lame\* --exclude=lame-devel -y
+sudo dnf group upgrade --with-optional Multimedia -y
+
+# set hostname
+sudo hostnamectl set-hostname "mole"
+
+# Choose Java version
+echo "Selecting the default Java version..."
+sudo alternatives --config java
 
 echo "Installation complete. A reboot is required for Docker group changes to take effect."
 read -p "Would you like to reboot now? (y/N): " response
