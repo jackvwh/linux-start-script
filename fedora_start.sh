@@ -12,6 +12,14 @@ then
     sudo dnf install mysql-workbench-community-8.0.36-1.fc38.x86_64.rpm -y
 fi
 
+#install pgadmin4
+if ! command -v pgadmin4 &> /dev/null
+then
+    echo "Installing pgAdmin4..."
+    sudo rpm -i https://ftp.postgresql.org/pub/pgadmin/pgadmin4/yum/pgadmin4-redhat-repo-2-1.noarch.rpm
+    sudo dnf install pgadmin4-desktop -y 
+fi
+
 # install nodejs and  npm
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
