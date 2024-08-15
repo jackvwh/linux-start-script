@@ -20,22 +20,6 @@ then
     sudo dnf install pgadmin4-desktop -y 
 fi
 
-#install steam
-if ! command -v steam &> /dev/null
-then
-    echo "Installing Steam..."
-    sudo dnf install steam -y
-fi
-
-#install newest nvidia drivers
-if ! command -v nvidia-smi &> /dev/null
-then
-    echo "Installing the latest NVIDIA drivers..."
-    sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora39/x86_64/cuda-fedora39.repo
-    sudo dnf install kernel-headers kernel-devel tar bzip2 make automake gcc gcc-c++ pciutils elfutils-libelf-devel libglvnd-opengl libglvnd-glx libglvnd-devel acpid pkgconfig dkms -y
-    sudo dnf module install nvidia-driver:latest-dkms -y
-fi
-
 # install nodejs and  npm
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
