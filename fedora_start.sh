@@ -4,6 +4,29 @@ echo "Starting the script with user: $USER and sudo user: $SUDO_USER"
 echo "Updating the system..."
 sudo dnf upgrade --refresh -y
 
+#install git
+if ! command -v git &> /dev/null
+then
+    echo "Installing git..."
+    sudo dnf install git -y
+fi
+
+#set git config
+git config --global user.name "Jack Hansen"
+git config --global user.email "jackvwh@hotmail.com"
+
+#install delelopment tools
+sudo dnf groupinstall "Development Tools" -y
+
+#install rustup
+if ! command -v rustup &> /dev/null
+then
+    echo "Installing rustup..."
+    sudo dnf install rustup -y
+fi
+#install rust
+rustup-init -y
+
 #install mysql workbench
 if ! command -v mysql-workbench &> /dev/null
 then
