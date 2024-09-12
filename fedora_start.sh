@@ -39,7 +39,7 @@ fi
 if ! command -v pgadmin4 &> /dev/null
 then
     echo "Installing pgAdmin4..."
-    sudo rpm -i https://ftp.postgresql.org/pub/pgadmin/pgadmin4/yum/pgadmin4-redhat-repo-2-1.noarch.rpm
+    sudo rpm -i https://ftp.postgresql.org/pub/pgadmin/pgadmin4/yum/pgadmin4-fedora-repo-2-1.noarch.rpm
     sudo dnf install pgadmin4-desktop -y 
 fi
 
