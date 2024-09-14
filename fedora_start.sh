@@ -11,6 +11,13 @@ then
     sudo dnf install git -y
 fi
 
+#install git cli
+if ! command -v gh &> /dev/null
+then
+    echo "Installing gh cli..."
+    sudo dnf install gh -y
+fi
+
 #set git config
 git config --global user.name "Jack Hansen"
 git config --global user.email "jackvwh@hotmail.com"
