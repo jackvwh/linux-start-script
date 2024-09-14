@@ -15,7 +15,7 @@ fi
 git config --global user.name "Jack Hansen"
 git config --global user.email "jackvwh@hotmail.com"
 
-#install delelopment tools
+#install development tools
 sudo dnf groupinstall "Development Tools" -y
 
 #install rustup
@@ -26,6 +26,13 @@ then
 fi
 #install rust
 rustup-init -y
+
+#install rust nightly
+rustup toolchain install nightly
+
+#set nightly as default
+rustup default nightly
+
 
 #install mysql workbench
 if ! command -v mysql-workbench &> /dev/null
@@ -46,6 +53,10 @@ fi
 # install nodejs and  npm
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
+
+# install pnpm
+echo "Installing pnpm..."
+npm install -g pnpm
 
 # install JetBrains Toolbox
 if ! command -v jetbrains-toolbox &> /dev/null
