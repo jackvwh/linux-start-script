@@ -77,6 +77,15 @@ then
     echo "JetBrains Toolbox installed successfully."
 fi
 
+# install mullvad vpn
+if ! command -v mullvad-vpn &> /dev/null
+then
+    echo "Added Mullvad repository..."
+    sudo dnf config-manager --add-repo https://repository.mullvad.net/rpm/stable/mullvad.repo
+    echo "Installing Mullvad VPN..."
+    sudo dnf install mullvad-vpn -y
+fi
+
 #install vscode
 if ! command -v code &> /dev/null
 then
