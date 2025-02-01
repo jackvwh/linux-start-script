@@ -39,17 +39,6 @@ fi
 echo "Installing pnpm..."
 npm install -g pnpm
 
-# Install JetBrains Toolbox
-if ! command -v jetbrains-toolbox &> /dev/null
-then
-    echo "Installing JetBrains Toolbox..."
-    sudo mkdir -p /opt/jetbrains
-    wget -O jetbrains-toolbox.tar.gz "https://data.services.jetbrains.com/products/download?platform=linux&code=TBA"
-    sudo tar -xzf jetbrains-toolbox.tar.gz -C /opt/jetbrains
-    rm jetbrains-toolbox.tar.gz
-    sudo ln -s /opt/jetbrains/jetbrains-toolbox-*/jetbrains-toolbox /usr/bin/jetbrains
-fi
-
 # Configure Docker
 if command -v docker &> /dev/null
 then

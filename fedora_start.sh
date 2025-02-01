@@ -26,7 +26,6 @@ git config --global gpg.format ssh
 git config --global user.signingkey ~/.ssh/id_ed25519
 git config --global commit.gpgsign true 
 
-
 #install development tools
 sudo dnf groupinstall "Development Tools" -y
 
@@ -53,18 +52,6 @@ sudo dnf install nodejs npm -y
 # install pnpm
 echo "Installing pnpm..."
 npm install -g pnpm
-
-# install JetBrains Toolbox
-if ! command -v jetbrains-toolbox &> /dev/null
-then
-    echo "Installing JetBrains Toolbox..."
-    sudo mkdir /opt/jetbrains
-    wget -O jetbrains-toolbox.tar.gz "https://data.services.jetbrains.com/products/download?platform=linux&code=TBA"
-    sudo tar -xzf jetbrains-toolbox.tar.gz -C /opt/jetbrains
-    rm jetbrains-toolbox.tar.gz
-    sudo ln -s /opt/jetbrains/jetbrains-toolbox-*/jetbrains-toolbox /usr/bin/jetbrains
-    echo "JetBrains Toolbox installed successfully."
-fi
 
 #install vscode
 if ! command -v code &> /dev/null
