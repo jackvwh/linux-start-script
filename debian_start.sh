@@ -4,10 +4,10 @@ echo "Starting the script with user: $USER and sudo user: $SUDO_USER"
 
 # Update the system
 echo "Updating the system..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update -y && sudo apt upgrade -y
 
 # Install development essentials
-sudo apt install git gh build-essential nodejs npm maven default-jdk openjdk-17-jdk mysql-workbench docker.io docker-compose code -y
+sudo apt install git gh build-essential nodejs npm docker.io docker-compose code -y
 
 # Set git config
 git config --global user.name "Jack Hansen"
