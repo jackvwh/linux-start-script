@@ -18,36 +18,17 @@ then
     sudo dnf install gh -y
 fi
 
-#set git config
+# Set git config
 git config --global user.name "Jack Hansen"
 git config --global user.email "jackvwh@hotmail.com"
+git config --global push.autoSetupRemote true
+git config --global gpg.format ssh 
+git config --global user.signingkey ~/.ssh/id_ed25519
+git config --global commit.gpgsign true 
+
 
 #install development tools
 sudo dnf groupinstall "Development Tools" -y
-
-#install rustup
-if ! command -v rustup &> /dev/null
-then
-    echo "Installing rustup..."
-    sudo dnf install rustup -y
-fi
-#install rust
-rustup-init -y
-
-#install rust nightly
-rustup toolchain install nightly
-
-#set nightly as default
-rustup default nightly
-
-
-#install mysql workbench
-if ! command -v mysql-workbench &> /dev/null
-then
-    echo "Installing MySQL Workbench..."
-    wget https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-8.0.36-1.fc38.x86_64.rpm
-    sudo dnf install mysql-workbench-community-8.0.36-1.fc38.x86_64.rpm -y
-fi
 
 #install pgadmin4
 if ! command -v pgadmin4 &> /dev/null
@@ -114,28 +95,6 @@ then
     sudo systemctl enable docker
 fi
 
-
-echo "Installing Java 17 and latest OpenJDK..."
-sudo dnf install java-17-openjdk-devel.x86_64 -y
-sudo dnf install java-latest-openjdk-devel.x86_64 -y
-
-
-#install Maven
-if ! command -v mvn &> /dev/null
-then
-    echo "Installing Maven..."
-    sudo dnf install maven -y
-fi
-
-#install Mattermost Desktop from flathub
-if ! command -v mattermost-desktop &> /dev/null
-then
-    echo "Installing Mattermost Desktop..."
-    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    flatpak install flathub com.mattermost.Desktop -y
-    flatpak run com.mattermost.Desktop
-fi
-
 # install Chrome browser from Flathub
 if ! command -v google-chrome &> /dev/null
 then
@@ -151,10 +110,6 @@ sudo dnf group upgrade --with-optional Multimedia -y
 
 # set hostname
 sudo hostnamectl set-hostname "mole"
-
-# Choose Java version
-echo "Selecting the default Java version..."
-sudo alternatives --config java
 
 echo "Installation complete. A reboot is required for Docker group changes to take effect."
 read -p "Would you like to reboot now? (y/N): " response
