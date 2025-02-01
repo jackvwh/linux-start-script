@@ -51,15 +51,6 @@ then
     sudo usermod -aG docker $SUDO_USER
 fi
 
-# Install mattermost desktop
-if ! command -v mattermost-desktop &> /dev/null
-then
-    echo "Installing Mattermost Desktop..."
-    curl -fsS -o- https://deb.packages.mattermost.com/setup-repo.sh | sudo bash
-    sudo apt install mattermost-desktop
-    sudo apt upgrade mattermost-desktop
-fi
-
 # Install Google Chrome
 if ! command -v google-chrome &> /dev/null
 then
