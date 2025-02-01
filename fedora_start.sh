@@ -116,6 +116,13 @@ sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-open
 sudo dnf install lame\* --exclude=lame-devel -y
 sudo dnf group upgrade --with-optional Multimedia -y
 
+# Install Slack flathub 
+if ! command -v slack &> /dev/null
+then
+    echo "Installing Slack..."
+    flatpak install flathub com.slack.Slack -y
+fi
+
 # set hostname
 sudo hostnamectl set-hostname "mole"
 
