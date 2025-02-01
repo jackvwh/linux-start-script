@@ -12,6 +12,10 @@ sudo apt install git gh build-essential nodejs npm maven default-jdk openjdk-17-
 # Set git config
 git config --global user.name "Jack Hansen"
 git config --global user.email "jackvwh@hotmail.com"
+git config --global push.autoSetupRemote true
+git config --global gpg.format ssh 
+git config --global user.signingkey ~/.ssh/id_ed25519
+git config --global commit.gpgsign true 
 
 # Install rustup and rust
 if ! command -v rustup &> /dev/null
