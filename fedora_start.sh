@@ -30,6 +30,14 @@ git config --global commit.gpgsign true
 #install development tools
 sudo dnf groupinstall "Development Tools" -y
 
+# Install Terraform
+if ! command -v terraform &> /dev/null
+then
+    sudo dnf install -y dnf-plugins-core
+    sudo dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+    sudo dnf -y install terraform
+fi
+
 #install pgadmin4
 if ! command -v pgadmin4 &> /dev/null
 then
