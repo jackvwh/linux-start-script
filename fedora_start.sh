@@ -46,7 +46,7 @@ then
     sudo dnf install pgadmin4-desktop -y 
 fi
 
-# install nodejs and  npm
+# install nodejs and npm
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
 
@@ -73,7 +73,7 @@ then
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
     sudo dnf check-update
-    sudo dnf -y install code # or code-insiders
+    sudo dnf -y install code 
 fi
 
 #install docker engine
