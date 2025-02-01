@@ -7,7 +7,7 @@ echo "Updating the system..."
 sudo apt update -y && sudo apt upgrade -y
 
 # Install development essentials
-sudo apt install git gh build-essential nodejs npm docker.io docker-compose code -y
+sudo apt install git gh build-essential nodejs npm code -y
 
 # Set git config
 git config --global user.name "Jack Hansen"
