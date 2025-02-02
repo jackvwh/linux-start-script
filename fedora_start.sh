@@ -104,6 +104,11 @@ then
     sudo usermod -aG docker $SUDO_USER
     sudo systemctl enable docker.service
     sudo systemctl enable containerd.service
+    if ! command -v docker &> /dev/null
+        then
+            echo "Docker installation failed. Please install docker manually."
+            exit 1
+    fi
 fi
 
 # Install Brave browser
