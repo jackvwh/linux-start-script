@@ -92,23 +92,18 @@ then
                   docker-engine
 
     sudo dnf -y install dnf-plugins-core
-    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-    sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    sudo systemctl start docker
+    
+    sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+    sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     sudo docker run hello-world
+
 # linux post install docker
     sudo groupadd docker
     echo "Attempting to add user to docker group..."
     sudo usermod -aG docker $SUDO_USER
-    sudo systemctl enable docker
-fi
-
-# install Chrome browser from Flathub
-if ! command -v google-chrome &> /dev/null
-then
-    echo "Installing Google Chrome..."
-    flatpak install flathub com.google.Chrome -y
-    flatpak run com.google.Chrome
+    sudo systemctl enable docker.service
+    sudo systemctl enable containerd.service
 fi
 
 # Install Brave browser
