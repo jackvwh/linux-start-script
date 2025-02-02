@@ -126,6 +126,13 @@ then
     sudo apt install google-chrome-stable
 fi
 
+# Install Brave browser
+if ! command -v brave &> /dev/null
+then
+    echo "Installing Brave Browser..."
+    curl -fsS https://dl.brave.com/install.sh | sh
+fi
+
 # Set hostname
 sudo hostnamectl set-hostname "mole"
 
