@@ -123,6 +123,18 @@ then
     flatpak install flathub com.slack.Slack -y
 fi
 
+# Install Golang
+if ! command -v go &> /dev/null
+then
+    echo "Installing Golang..."
+    sudo dnf install golang -y
+    if ! command -v go &> /dev/null
+        then
+            echo "Golang installation failed. Please install golang manually."
+            exit 1
+    fi
+fi
+
 # set hostname
 sudo hostnamectl set-hostname "mole"
 
