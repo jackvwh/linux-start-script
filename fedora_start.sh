@@ -95,7 +95,7 @@ then
     
     sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 
-    sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
     sudo docker run hello-world
 
 # linux post install docker
@@ -112,7 +112,6 @@ then
     echo "Installing Brave Browser..."
     curl -fsS https://dl.brave.com/install.sh | sh
 fi
-
 
 # Install Slack flathub 
 if ! command -v slack &> /dev/null
