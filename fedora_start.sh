@@ -54,6 +54,16 @@ sudo dnf install nodejs npm -y
 echo "Installing pnpm..."
 npm install -g pnpm
 
+echo "Installing Java 17 and latest OpenJDK..."
+sudo dnf install java-17-openjdk-devel.x86_64 -y
+sudo dnf install java-latest-openjdk-devel.x86_64 -y
+#install Maven
+if ! command -v mvn &> /dev/null
+then
+    echo "Installing Maven..."
+    sudo dnf install maven -y
+fi
+
 # install JetBrains Toolbox
 if ! command -v jetbrains-toolbox &> /dev/null
 then
@@ -146,6 +156,10 @@ chmod 600 ~/.ssh/* && chmod 700 ~/.ssh && chmod 644 ~/.ssh/*.pub
 
 # set hostname
 sudo hostnamectl set-hostname "mole"
+
+# Choose Java version
+echo "Selecting the default Java version..."
+sudo alternatives --config java
 
 echo "Installation complete. A reboot is required for Docker group changes to take effect."
 read -p "Would you like to reboot now? (y/N): " response
