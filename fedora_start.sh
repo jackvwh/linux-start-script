@@ -4,6 +4,11 @@ echo "Starting the script with user: $USER and sudo user: $SUDO_USER"
 echo "Updating the system..."
 sudo dnf upgrade --refresh -y
 
+# Set custom aliases for update and upgrade
+echo "Setting custom aliases"
+sudo echo "#Custom aliases" >> ~/.bashrc
+sudo echo "alias update='sudo dnf upgrade --refresh -y'" >> ~/.bashrc
+
 #install git
 if ! command -v git &> /dev/null
 then
@@ -57,6 +62,7 @@ npm install -g pnpm
 echo "Installing Java 17 and latest OpenJDK..."
 sudo dnf install java-17-openjdk-devel.x86_64 -y
 sudo dnf install java-latest-openjdk-devel.x86_64 -y
+
 #install Maven
 if ! command -v mvn &> /dev/null
 then
