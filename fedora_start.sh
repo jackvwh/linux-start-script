@@ -51,6 +51,10 @@ then
     sudo dnf install pgadmin4-desktop -y 
 fi
 
+# install postgresql
+echo "Installing postgresql..."
+sudo dnf install postgresql-server postgresql-contrib
+
 # install nodejs and npm
 echo "Installing Node.js and npm..."
 sudo dnf install nodejs npm -y
