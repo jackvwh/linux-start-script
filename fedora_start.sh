@@ -40,6 +40,37 @@ npm install -g pnpm
 echo "Installing Java latest OpenJDK..."
 sudo dnf5 install -y java-latest-openjdk-devel.x86_64
 
+# Install Golang
+echo "Installing Golang..."
+sudo dnf install -y golang
+
+# Create GOPATH directory
+echo "Setting up GOPATH..."
+mkdir -p "$HOME/go"
+
+# Export GOPATH to .bashrc if not already present
+if ! grep -q "export GOPATH=" "$HOME/.bashrc"; then
+    echo 'export GOPATH=$HOME/go' >> "$HOME/.bashrc"
+fi
+
+# Source .bashrc so changes take effect in this session
+source "$HOME/.bashrc"
+
+# Fedora 43 specific defaults
+echo "Configuring Fedora 43 Go defaults..."
+# Keep Fedora's default: GOTOOLCHAIN=local
+go env -w GOTOOLCHAIN=local
+
+# Optional: uncomment these if you prefer direct proxy and no sumdb
+# go env -w GOPROXY=direct
+# go env -w GOSUMDB=off
+
+# Verify installation
+echo "Go version:"
+go version
+echo "GOPATH:"
+go env GOPATH
+
 # Install JetBrains Toolbox
 if ! command -v jetbrains-toolbox &> /dev/null; then
     echo "Installing JetBrains Toolbox..."
